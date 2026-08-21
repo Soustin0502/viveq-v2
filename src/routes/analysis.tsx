@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Footer, Screen } from "@/components/viveq/Shell";
-import { Btn, Dot, RiskBar, riskColor, type RiskLevel } from "@/components/viveq/ui";
+import { Btn, Dot, RiskBar, RiskLegend, riskColor, type RiskLevel } from "@/components/viveq/ui";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/analysis")({
@@ -208,6 +208,7 @@ function Analysis() {
             </span>
           </div>
           <RiskBar score={score} level={level} />
+          <RiskLegend active={target === 0 ? null : level} />
         </div>
       </header>
 

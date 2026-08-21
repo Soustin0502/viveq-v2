@@ -166,3 +166,42 @@ export function IndicatorRow({
     </div>
   );
 }
+
+const legendItems: { level: RiskLevel; label: string; dot: string }[] = [
+  { level: "LOW", label: "LOW", dot: "bg-low" },
+  { level: "CAUTION", label: "CAUTION", dot: "bg-caution" },
+  { level: "SUSPICIOUS", label: "SUSPICIOUS", dot: "bg-suspicious" },
+  { level: "CRITICAL", label: "CRITICAL", dot: "bg-critical" },
+];
+
+export function RiskLegend({ active }: { active: RiskLevel | null }) {
+  return (
+    <div className="flex items-center gap-3 text-[10px] tracking-[0.1em] text-subtle-foreground">
+      <span className="label-micro">Risk</span>
+      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+        {legendItems.map((item) => {
+          const isActive = active === item.level;
+          return (
+            <span
+              key={item.level}
+              className={cn(
+                "inline-flex items-center gap-1.5 transition-opacity duration-300",
+                isActive ? "opacity-100" : "opacity-50",
+              )}
+            >
+              <span className={cn("size-1.5 rounded-full", item.dot)} />
+              <span
+                className={cn(
+                  "transition-colors duration-300",
+                  isActive ? riskText[item.level] : "text-subtle-foreground",
+                )}
+              >
+                {item.label}
+              </span>
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

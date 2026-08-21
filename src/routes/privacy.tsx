@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Body, Footer, Screen, TopBar } from "@/components/viveq/Shell";
 import { Btn, Label } from "@/components/viveq/ui";
+import { useReducedMotion } from "@/lib/reduced-motion";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -27,6 +28,8 @@ const rows = [
 ];
 
 function Privacy() {
+  const [reduced, setReduced] = useReducedMotion();
+
   return (
     <Screen>
       <TopBar
@@ -50,6 +53,38 @@ function Privacy() {
               <span className="text-right text-[13px] text-muted-foreground">{v}</span>
             </div>
           ))}
+        </div>
+
+        <div>
+          <Label className="mb-2">Accessibility</Label>
+          <div className="rounded-[12px] border border-border bg-card px-4 py-4">
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <p className="text-[14px] font-medium">Reduced Motion</p>
+                <p className="text-[12px] leading-[1.5] text-muted-foreground">
+                  Reduce animations and transitions throughout VIVEQ.
+                </p>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={reduced}
+                aria-label="Toggle reduced motion"
+                onClick={() => setReduced(!reduced)}
+                className={`relative flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors duration-200 ${
+                  reduced
+                    ? "border-low/50 bg-low/30"
+                    : "border-border bg-surface"
+                }`}
+              >
+                <span
+                  className={`inline-block size-4 rounded-full transition-transform duration-200 ${
+                    reduced ? "translate-x-6 bg-low" : "translate-x-1 bg-muted-foreground"
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
         </div>
 
         <div>

@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Screen } from "@/components/viveq/Shell";
+import { useState } from "react";
+import { Body, Footer, Screen } from "@/components/viveq/Shell";
+import { Btn, Dot } from "@/components/viveq/ui";
 
 export const Route = createFileRoute("/call")({
   head: () => ({
@@ -18,6 +20,42 @@ export const Route = createFileRoute("/call")({
 
 function IncomingCall() {
   const navigate = useNavigate();
+  const [declined, setDeclined] = useState(false);
+
+  if (declined) {
+    return (
+      <Screen>
+        <Body className="flex flex-1 flex-col justify-center gap-7">
+          <div className="space-y-4 text-center">
+            <div className="flex justify-center">
+              <span className="flex size-16 items-center justify-center rounded-full border border-border bg-card text-[24px] text-muted-foreground">
+                ✕
+              </span>
+            </div>
+            <h1 className="font-display text-[28px] font-medium leading-[1.1] tracking-[-0.02em]">
+              Call declined
+            </h1>
+            <div className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-[12px] text-muted-foreground">
+              <Dot className="bg-low" />
+              Risk assessed: LOW
+            </div>
+          </div>
+
+          <p className="mx-auto max-w-[32ch] text-center text-[14px] leading-[1.6] text-muted-foreground">
+            The simulated interaction ended before high-risk behaviour occurred.
+          </p>
+        </Body>
+        <Footer>
+          <Btn variant="primary" to="/">
+            Return Home
+          </Btn>
+          <Btn variant="outline" to="/simulation">
+            Run Simulation Again
+          </Btn>
+        </Footer>
+      </Screen>
+    );
+  }
 
   return (
     <Screen>
@@ -48,7 +86,7 @@ function IncomingCall() {
         <div className="flex items-end justify-between px-4">
           <button
             type="button"
-            onClick={() => navigate({ to: "/simulation" })}
+            onClick={() => setDeclined(true)}
             className="flex flex-col items-center gap-2"
           >
             <span className="flex size-16 items-center justify-center rounded-full bg-critical text-[oklch(0.15_0.006_260)] transition-transform active:scale-95">

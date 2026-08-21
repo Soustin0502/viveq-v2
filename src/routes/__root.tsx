@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { updateRootClass } from "../lib/reduced-motion";
 
 function NotFoundComponent() {
   return (
@@ -129,6 +130,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    updateRootClass();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
